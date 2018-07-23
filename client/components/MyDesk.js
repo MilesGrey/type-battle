@@ -7,13 +7,15 @@ const socket = openSocket('http://localhost:8080');
 
 export default class MyDesk extends React.Component {
   state = {
-    words: ['component', 'lamp', 'dog']
+    words: []
   }
 
   componentDidMount() {
     socket.on('wordCompleted', word => {
+      console.log(word);
+      
       this.setState((prevState) => ({
-        words: prevState.words.push(word)
+        words: prevState.words.concat(word)
       }));
     });
   }

@@ -14,6 +14,12 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected.');
   });
+
+  socket.on('wordCompleted', (word) => {
+    socket.broadcast.emit('wordCompleted', word);
+    console.log(word);
+    
+  });
 });
 
 http.listen(PORT, () => {
