@@ -6,7 +6,7 @@ const io = require('socket.io')(http);
 const PORT = process.env.PORT || 8080;
 const HOST = 'localhost';
 
-server.use(express.static(__dirname + '/public'))
+server.use(express.static(__dirname + '/client/public'))
 
 io.on('connection', (socket) => {
   console.log('a user connected!');

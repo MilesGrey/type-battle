@@ -4,9 +4,9 @@ import Word from './Word';
 const Words = (props) => (
   <div>
   {
-    props.words.map(word => (
+    props.words.map((word, index) => (
       <Word
-        key={word} 
+        key={index} 
         word={word}
       />
     ))

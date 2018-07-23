@@ -7,7 +7,7 @@ const socket = openSocket('http://localhost:8080');
 
 export default class MyDesk extends React.Component {
   state = {
-    words: []
+    words: ['lamp', 'dog', 'component']
   }
 
   componentDidMount() {
