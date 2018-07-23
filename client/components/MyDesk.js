@@ -1,8 +1,23 @@
 import React from 'react';
+import openSocket from 'socket.io-client';
 import Words from './Words';
 import WordInput from './WordInput';
 
+const socket = openSocket('http://localhost:8080');
+
 export default class MyDesk extends React.Component {
+  state = {
+    words: ['component', 'lamp', 'dog']
+  }
+
+  componentDidMount() {
+    socket.on('wordCompleted', word => {
+      this.setState((prevState) => ({
+        words: prevState.words.push(word)
+      }));
+    });
+  }
+
   handleWordSubmit = (inputWord) => {
     if (this.state.words.indexOf(inputWord) === -1 ) {
       return true;
@@ -11,6 +26,7 @@ export default class MyDesk extends React.Component {
     this.setState((prevState) => ({
       words: prevState.words.filter(word => inputWord != word)
     }));
+    socket.emit('wordCompleted', inputWord);
   }
 
   render = () => (
