@@ -43,7 +43,7 @@ export default class MyDesk extends React.Component {
       gameId: this.state.gameId,
       word: inputWord
     }
-    socket.emit('wordCompleted', data);
+    socket.emit('playerCompleteWord', data);
   }
 
   handleCreateGame = () => {
