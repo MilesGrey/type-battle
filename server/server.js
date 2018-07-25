@@ -9,6 +9,10 @@ const HOST = 'localhost';
 
 app.use(express.static(path.join(__dirname, '/../client/public/')));
 
+app.get('*', (requestAnimationFrame, res) => {
+  res.sendFile(path.join(__dirname, '/../client/public/index.html'));
+});
+
 server.listen(PORT, () => {
   console.log(`Server is listenting on server://${HOST}:${PORT}`);
 });
