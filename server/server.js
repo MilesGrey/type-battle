@@ -31,9 +31,9 @@ io.on('connection', (socket) => {
         'avenue'
       ]
     };
-    gameSocket.join(gameId.toString(), () => {
+    socket.join(gameId.toString(), () => {
       console.log(`player created and joined room: ${gameId}`);
-      gameSocket.emit('initializeRoom', data);
+      socket.emit('initializeRoom', data);
     });
   });
 
@@ -47,15 +47,15 @@ io.on('connection', (socket) => {
       ]
     };
   
-    gameSocket.join(gameId, () => {
+    socket.join(gameId, () => {
       console.log(`player joined room: ${gameId}`);
-      gameSocket.emit('initializeRoom', data)
+      socket.emit('initializeRoom', data)
     });
   });
 
   socket.on('playerCompleteWord', (data) => {
     console.log(`player in room ${data.gameId} completed word: ${data.word}`);
-    gameSocket.broadcast.to(data.gameId).emit('enemyWordCompleted', data.word);
+    socket.broadcast.to(data.gameId).emit('enemyWordCompleted', data.word);
   });
 });
 
