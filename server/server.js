@@ -7,10 +7,10 @@ const io = require('socket.io')(server);
 const PORT = process.env.PORT || 8080;
 const HOST = 'localhost';
 
-app.use(express.static(path.join(__dirname, '/../client/public/')));
+app.use(express.static(path.join(__dirname, '/../public/')));
 
 app.get('*', (requestAnimationFrame, res) => {
-  res.sendFile(path.join(__dirname, '/../client/public/index.html'));
+  res.sendFile(path.join(__dirname, '/../public/index.html'));
 });
 
 server.listen(PORT, () => {
