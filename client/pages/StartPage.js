@@ -1,8 +1,11 @@
 import React from 'react';
+import GameList from '../components/GameList';
+import CreateJoinGame from '../components/CreateJoinGame';
 
 const StartPage = () => (
   <div>
-    This is the start page!
+    <CreateJoinGame />
+    <GameList gameList={this.state.gameList} />
   </div>
 );
 
