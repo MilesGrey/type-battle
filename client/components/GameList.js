@@ -1,12 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const GameList = (props) => (
     <div>
-        {
-            !!props.gameList && gameList.map((game) => (
-                <p>{game}</p>
-            ))
-        }
+        <ul>
+            {
+                !!props.gameList && props.gameList.map((game) => (
+                    <li key={game}>
+                        <Link to={`/game/${game}`}>{game}</Link>
+                    </li>
+                ))
+            }
+        </ul>
     </div>
 );
 

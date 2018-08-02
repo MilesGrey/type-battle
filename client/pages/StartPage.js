@@ -2,11 +2,16 @@ import React from 'react';
 import GameList from '../components/GameList';
 import CreateJoinGame from '../components/CreateJoinGame';
 
-const StartPage = () => (
-  <div>
-    <CreateJoinGame />
-    <GameList gameList={this.state.gameList} />
-  </div>
-);
+export default class StartPage extends React.Component {
 
-export default StartPage;
+  state = {
+    'gameList': ['test', 'asd', 'asn']
+  }
+
+  render = () => (
+    <div>
+      <CreateJoinGame />
+      <GameList gameList={this.state.gameList} />
+    </div>
+  );
+}
