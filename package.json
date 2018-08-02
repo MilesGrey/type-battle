@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack",
-    "serve": "node ./server/server.js"
+    "serve": "node ./server/server.js",
+    "build-serve": "yarn build && yarn serve"
   },
   "dependencies": {
     "babel-cli": "6.24.1",
