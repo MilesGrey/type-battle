@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack",
-    "serve": "node ./server/server.js",
+    "serve": "start http://localhost:8080 & node ./server/server.js",
     "build-serve": "yarn build && yarn serve"
   },
   "dependencies": {
