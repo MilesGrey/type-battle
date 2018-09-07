@@ -8,7 +8,7 @@ const routes = (
   <BrowserRouter>
     <Switch>
       <Route path='/' component={StartPage} exact={true} />
-      <Route path='/game' component={GamePage} exact={true} />
+      <Route path='/game/:roomName' component={GamePage} />
       <Route component={NotFoundPage} />
     </Switch>
   </BrowserRouter>

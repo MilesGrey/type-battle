@@ -2,22 +2,26 @@ import React from "react";
 import { withRouter } from 'react-router-dom';
 
 class CreateJoinGame extends React.Component {
-
-  handleSubmitForm = (e) => {
+  handleCreateGame = (e) => {
     e.preventDefault();
-    const gameId = e.target.elements.gameId.value.trim();
-    this.props.history.push(`/game/${gameId}`);
+    const createRoomName = e.target.elements.createRoomName.value.replace(/ /g, '');
+    this.props.history.push(`/game/${createRoomName}`);
   }
 
-  handleJoinGame = () => {
-    this.props.history.push('/game');
+  handleJoinGame = (e) => {
+    e.preventDefault();
+    const joinRoomName = e.target.elements.joinRoomName.value.replace(/ /g, '');
+    this.props.history.push(`/game/${joinRoomName}`);
   }
 
   render = () => (
     <div>
-      <button onClick={this.handleJoinGame}>Create Game</button>
-      <form onSubmit={this.handleSubmitForm}>
-        <input type="text" placeholder="Enter Game ID" name="gameId" />
+      <form onSubmit={this.handleCreateGame}>
+        <input type="text" placeholder="Enter new room name" name="createRoomName" />
+        <button type="submit">Create Game</button>
+      </form>
+      <form onSubmit={this.handleJoinGame}>
+        <input type="text" placeholder="Enter room name" name="joinRoomName" />
         <button type="submit">Join Game</button>
       </form>
     </div>
