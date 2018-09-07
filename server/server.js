@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-const Game = require('./Game');
+const Connection = require('./Connection');
 
 const PORT = process.env.PORT || 8080;
 const HOST = 'localhost';
@@ -20,6 +20,6 @@ server.listen(PORT, () => {
 
 io.on('connection', (socket) => {
   console.log('a user connected!');
-  new Game(socket);
+  new Connection(socket);
 });
 

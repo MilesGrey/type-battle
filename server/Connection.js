@@ -1,4 +1,4 @@
-class Game {
+class Connection {
     constructor(socket) {
         this.socket = socket;
 
@@ -7,9 +7,7 @@ class Game {
             });
             
         socket.on('hostCreateNewGame', this.handleHostCreateNewGame);
-        
         socket.on('playerJoinGame', this.handlePlayerJoinGame);
-        
         socket.on('playerCompleteWord', this.handlePlayerCompleteWord);
     }
 
@@ -52,4 +50,4 @@ class Game {
     }
 }
 
-module.exports = Game;
+module.exports = Connection;
