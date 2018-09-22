@@ -1,7 +1,17 @@
+let openRooms = [];
+let closedRooms = [];
+
+let wordPool = [
+    'player',
+    'mozart',
+    'avenue',
+    'hello',
+    'dinner',
+    'room'
+];
+
 class Connection {
     constructor(socket) {
-        this.socket = socket;
-
         socket.on('disconnect', () => {
             console.log('a user disconnected!');
             });
@@ -9,44 +19,51 @@ class Connection {
         socket.on('hostCreateNewGame', this.handleHostCreateNewGame);
         socket.on('playerJoinGame', this.handlePlayerJoinGame);
         socket.on('playerCompleteWord', this.handlePlayerCompleteWord);
+        socket.on('requestOpenRooms', this.handleRequestOpenRooms);
     }
 
-    handleHostCreateNewGame() {
-        // not necessarily unique
-        const gameId = Math.floor(Math.random() * 100000);
-        const data = {
-            gameId: gameId,
-            words: [
-            'player',
-            'mozart',
-            'avenue'
-            ]
-        };
-        socket.join(gameId.toString(), () => {
-            console.log(`player created and joined room: ${gameId}`);
-            socket.emit('initializeRoom', data);
+    handleHostCreateNewGame(room) {
+        if (openRooms.includes(room) || closedRooms.includes(room)) {
+            this.emit('roomAlreadyExists');
+            return;
+        }
+
+        openRooms.push(room);
+        this.broadcast.emit('roomOpened', room);
+
+        const words = wordPool.splice(-3, 3);
+        
+        this.join(words, () => {
+            console.log(`player joined room: ${room}`);
+            this.emit('initializeRoom', words)
         });
     }
 
-    handlePlayerJoinGame(gameId) {
-        const data = {
-            gameId: gameId,
-            words: [
-            'hello',
-            'dinner',
-            'room'
-            ]
-        };
+    handlePlayerJoinGame(room) {
+        if (!openRooms.includes(room)) {
+            this.emit('cannotJoinRoom');
+            return;
+        }
+
+        openRooms.pop(room);
+        closedRooms.push(room);
+        this.broadcast.emit('roomClosed', room);
+
+        const words = wordPool.splice(-3, 3);
         
-        socket.join(gameId, () => {
-            console.log(`player joined room: ${gameId}`);
-            socket.emit('initializeRoom', data)
+        this.join(words, () => {
+            console.log(`player joined room: ${room}`);
+            this.emit('initializeRoom', words)
         });
     }
 
     handlePlayerCompleteWord(data) {
         console.log(`player in room ${data.gameId} completed word: ${data.word}`);
-        socket.broadcast.to(data.gameId).emit('enemyWordCompleted', data.word);
+        this.broadcast.to(data.gameId).emit('enemyWordCompleted', data.word);
+    }
+
+    handleRequestOpenRooms() {
+        this.emit('responseOpenRooms', openRooms);
     }
 }
 

@@ -1,9 +1,6 @@
 import React from 'react';
-import openSocket from 'socket.io-client';
 import Words from './Words';
 import WordInput from './WordInput';
-
-const socket = openSocket();
 
 export default class MyDesk extends React.Component {
   state = {
