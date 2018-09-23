@@ -20,6 +20,6 @@ server.listen(PORT, () => {
 
 io.on('connection', (socket) => {
   console.log('a user connected!');
-  new Connection(socket);
+  new Connection(socket, io);
 });
 

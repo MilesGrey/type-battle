@@ -4,7 +4,7 @@ import Word from './Word';
 const Words = (props) => (
   <div>
   {
-    props.words.map((word, index) => (
+    !!props.words && props.words.map((word, index) => (
       <Word
         key={index} 
         word={word}

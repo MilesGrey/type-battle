@@ -7,7 +7,7 @@ export default class StartPage extends React.Component {
     rooms: []
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.socket.emit('requestOpenRooms');
     this.props.socket.on('responseOpenRooms', rooms => {
       this.setState(() => ({rooms}));

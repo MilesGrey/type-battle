@@ -8,11 +8,27 @@ export default class MyDesk extends React.Component {
   }
 
   componentWillMount() {
-    this.props.socket.on('initializeRoom', (data) => {
+    this.props.socket.emit('playerReady', this.props.gameId);
+    this.props.socket.on('initializeRoom', (words) => {
       this.setState(() => ({
-        words: data.words,
-        gameId: data.gameId
+        words
       }));
+    });
+
+    this.props.socket.on('startCountdown', () => {
+      let countdown = 5;
+      const countdownLabel = document.getElementById('countdown');
+      const interval = setInterval(() => {
+        countdownLabel.innerHTML = --countdown;
+        if (countdown === 0) {
+          clearInterval(interval);
+          const wordInput = document.getElementById('wordInput');
+          wordInput.disabled = false;
+          wordInput.focus();
+          countdownLabel.style.display = 'none';
+        }
+      }, 1000);
+      
     });
 
     this.props.socket.on('enemyWordCompleted', word => {
@@ -32,19 +48,17 @@ export default class MyDesk extends React.Component {
     }));
 
     const data = {
-      gameId: this.state.gameId,
+      gameId: this.props.gameId,
       word: inputWord
     }
-    socket.emit('playerCompleteWord', data);
+    this.props.socket.emit('playerCompleteWord', data);
   }
 
   render = () => (
     <div>
-      <p>{ this.props.gameId }</p>
-      <Words
-        words={this.state.words}
-        handleWordSubmit={this.handleWordSubmit}
-        />
+      <h2>Room: { this.props.gameId }</h2>
+      <h3 id="countdown">5</h3>
+      <Words words={this.state.words} />
       <WordInput handleWordSubmit={this.handleWordSubmit} />
     </div>
   );

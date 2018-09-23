@@ -16,8 +16,10 @@ export default class WordInput extends React.Component {
     <div>
       <form onSubmit={this.handleWordSubmit}>
         <input
+          id="wordInput"
           type="text"
           name="word"
+          disabled="true"
         />
       </form>
     </div>
