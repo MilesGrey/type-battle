@@ -39,7 +39,7 @@ export default class MyDesk extends React.Component {
   }
 
   handleWordSubmit = (inputWord) => {
-    if (this.state.words.includes(inputWord)) {
+    if (!this.state.words.includes(inputWord)) {
       return;
     }
 
