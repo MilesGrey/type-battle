@@ -1,9 +1,6 @@
 import React from 'react';
 import GameList from '../components/GameList';
 import CreateJoinGame from '../components/CreateJoinGame';
-import openSocket from 'socket.io-client';
-
-const socket = openSocket();
 
 export default class StartPage extends React.Component {
   state = {
@@ -11,18 +8,18 @@ export default class StartPage extends React.Component {
   };
 
   componentWillMount() {
-    socket.emit('requestOpenRooms');
-    socket.on('responseOpenRooms', rooms => {
+    this.props.socket.emit('requestOpenRooms');
+    this.props.socket.on('responseOpenRooms', rooms => {
       this.setState(() => ({rooms}));
     });
 
-    socket.on('roomOpened', (openedRoom) => {
+    this.props.socket.on('roomOpened', (openedRoom) => {
       this.setState((prevState) => ({
         rooms: prevState.rooms.concat(openedRoom)
       }));
     });
 
-    socket.on('roomClosed', (closedRoom) => {
+    this.props.socket.on('roomClosed', (closedRoom) => {
       this.setState((prevState) => ({
         rooms: prevState.rooms.filter((room) => room != closedRoom)
       }));
@@ -31,7 +28,7 @@ export default class StartPage extends React.Component {
 
   render = () => (
     <div>
-      <CreateJoinGame gameList={this.state.rooms} socket={socket} />
+      <CreateJoinGame gameList={this.state.rooms} socket={this.props.socket} />
       <GameList gameList={this.state.rooms} />
     </div>
   );

@@ -1,8 +1,9 @@
 import React from 'react';
+import MyDesk from '../components/MyDesk';
 
-const GamePage = () => (
+const GamePage = (props) => (
   <div>
-    This is the game page!
+    <MyDesk socket={props.socket} gameId={props.match.params.roomName}></MyDesk>
   </div>
 );
 
