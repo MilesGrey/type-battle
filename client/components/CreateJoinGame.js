@@ -14,11 +14,9 @@ class CreateJoinGame extends React.Component {
     const joinRoomName = e.target.elements.joinRoomName.value.replace(/ /g, '');
 
     if (this.props.gameList.includes(joinRoomName)) {
-      this.props.socket.emit('playerJoinGame', joinRoomName);
       this.props.history.push(`/game/${joinRoomName}`);
     } else {
       alert(`Room with name does not exist or is closed.`);
-      
     }
   }
 

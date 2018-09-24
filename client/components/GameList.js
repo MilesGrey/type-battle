@@ -1,19 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
-const GameList = (props) => (
-    <div>
-        <h3>Open Games</h3>
-        <ul>
-            {
-                !!props.gameList && props.gameList.map((game) => (
-                    <li key={game}>
-                        <Link to={`/game/${game}`}>{game}</Link>
-                    </li>
-                ))
-            }
-        </ul>
-    </div>
-);
+class GameList extends React.Component {
+    handleJoinGame = (e) => {
+        const room = e.target.innerHTML;
 
-export default GameList;
+        this.props.socket.emit('playerJoinGame', room);
+        this.props.history.push(`/game/${room}`);
+    }
+
+    render = () => (
+        <div>
+            <h3>Open Games</h3>
+            <ul>
+                {
+                    !!this.props.gameList && this.props.gameList.map((game) => (
+                        <li key={game}>
+                            <a onClick={this.handleJoinGame}>{game}</a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    );
+}
+
+export default withRouter(GameList);

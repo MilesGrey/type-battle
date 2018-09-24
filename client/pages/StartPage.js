@@ -29,7 +29,7 @@ export default class StartPage extends React.Component {
   render = () => (
     <div>
       <CreateJoinGame gameList={this.state.rooms} socket={this.props.socket} />
-      <GameList gameList={this.state.rooms} />
+      <GameList gameList={this.state.rooms} socket={this.props.socket} />
     </div>
   );
 }
